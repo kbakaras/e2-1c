@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://agr.glance.ru/e2" xmlns:e2="http://agr.glance.ru/e2"
+    xmlns:tns="http://agr.glance.ru/e2">
+    <xs:complexType name="listRequest">
+        <xs:complexContent>
+            <xs:extension base="tns:systemReference">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="system"
+                        type="tns:systemReference"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="reference"
+                        type="e2:reference"/>
+                    <xs:element name="entity" type="tns:entityRequest" maxOccurs="unbounded"
+                        minOccurs="0"/>
+                    <xs:element minOccurs="0" name="context" type="e2:context"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="elementRequest">
+        <xs:complexContent>
+            <xs:extension base="e2:systemReference">
+                <xs:sequence>
+                    <xs:element name="system" type="e2:systemReference" maxOccurs="unbounded"
+                        minOccurs="0"/>
+                    <xs:element name="reference" type="e2:reference" maxOccurs="unbounded"
+                        minOccurs="0"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="entity"
+                        type="e2:entityRequest"/>
+                    <xs:element minOccurs="0" name="context" type="e2:context"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="context">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="entity" type="e2:entity"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="listResponse">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="systemResponse"
+                type="tns:systemResponse"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="elementResponse">
+        <xs:sequence>
+            <xs:element name="systemResponse" type="e2:systemResponse" maxOccurs="unbounded"
+                minOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="systemResponse">
+        <xs:complexContent>
+            <xs:extension base="tns:systemReference">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="entity" type="e2:entity"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="state" type="e2:state"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="systemReference">
+        <xs:attribute name="systemUid" type="xs:string" use="required"/>
+        <xs:attribute name="systemName" type="xs:string"/>
+    </xs:complexType>
+    <xs:complexType name="entityRequest">
+        <xs:complexContent>
+            <xs:extension base="e2:entityReference">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" name="filter" type="e2:filter" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="filter">
+        <xs:complexContent>
+            <xs:extension base="e2:attribute">
+                <xs:attribute name="condition"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="updateRequest">
+        <xs:complexContent>
+            <xs:extension base="tns:systemReference">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="1" name="entity" type="e2:entity"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="state" type="e2:state"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="repeatRequest">
+        <xs:complexContent>
+            <xs:extension base="e2:updateRequest"/>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="entity">
+        <xs:complexContent>
+            <xs:extension base="e2:entityReference">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="element" type="e2:element"
+                    />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="element">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="attribute" type="e2:attribute"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="table" type="e2:table"/>
+        </xs:sequence>
+        <xs:attribute name="elementUid" type="xs:string" use="required"/>
+        <xs:attribute default="false" name="changed" type="xs:boolean"/>
+        <xs:attribute default="false" name="deleted" type="xs:boolean"/>
+        <xs:attribute default="false" name="synth" type="xs:boolean"/>
+    </xs:complexType>
+    <xs:complexType name="attribute">
+        <xs:choice>
+            <xs:element minOccurs="0" name="reference" type="e2:reference"/>
+            <xs:element minOccurs="0" name="value" type="xs:string"/>
+        </xs:choice>
+        <xs:attribute name="attributeName" type="xs:string" use="required"/>
+        <xs:attribute name="synth" type="xs:boolean"/>
+        <xs:attribute default="false" name="id" type="xs:boolean"/>
+    </xs:complexType>
+    <xs:complexType name="reference">
+        <xs:complexContent>
+            <xs:extension base="e2:entityReference">
+                <xs:attribute name="elementUid" type="xs:string" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="table">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="row" type="e2:row"/>
+        </xs:sequence>
+        <xs:attribute name="tableName" type="xs:string" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="row">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="attribute" type="e2:attribute"/>
+        </xs:sequence>
+        <xs:attribute name="index" type="xs:int"/>
+        <xs:attribute default="false" name="deleted" type="xs:boolean"/>
+    </xs:complexType>
+    <xs:complexType name="entityReference">
+        <xs:attribute name="entityName" type="xs:string" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="state">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="row" type="e2:row"/>
+        </xs:sequence>
+        <xs:attribute name="stateName" type="xs:string" use="required"/>
+    </xs:complexType>
+</xs:schema>

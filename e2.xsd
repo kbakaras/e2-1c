@@ -81,7 +81,7 @@
     </xs:complexType>
     <xs:complexType name="updateRequest">
         <xs:complexContent>
-            <xs:extension base="tns:systemReference">
+            <xs:extension base="e2:systemReference">
                 <xs:sequence>
                     <xs:element maxOccurs="unbounded" minOccurs="1" name="entity" type="e2:entity"/>
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="state" type="e2:state"/>
@@ -121,7 +121,6 @@
             <xs:element minOccurs="0" name="value" type="xs:string"/>
         </xs:choice>
         <xs:attribute name="attributeName" type="xs:string" use="required"/>
-        <xs:attribute name="synth" type="xs:boolean"/>
         <xs:attribute default="false" name="id" type="xs:boolean"/>
         <xs:attribute default="always" name="use" type="xs:string"/>
     </xs:complexType>

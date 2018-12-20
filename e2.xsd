@@ -113,6 +113,7 @@
         <xs:attribute default="false" name="changed" type="xs:boolean"/>
         <xs:attribute default="false" name="deleted" type="xs:boolean"/>
         <xs:attribute default="false" name="synth" type="xs:boolean"/>
+        <xs:attribute default="load" name="use" type="xs:string" use="optional"/>
     </xs:complexType>
     <xs:complexType name="attribute">
         <xs:choice>
@@ -122,6 +123,7 @@
         <xs:attribute name="attributeName" type="xs:string" use="required"/>
         <xs:attribute name="synth" type="xs:boolean"/>
         <xs:attribute default="false" name="id" type="xs:boolean"/>
+        <xs:attribute default="always" name="use" type="xs:string"/>
     </xs:complexType>
     <xs:complexType name="reference">
         <xs:complexContent>
@@ -135,6 +137,7 @@
             <xs:element maxOccurs="unbounded" minOccurs="0" name="row" type="e2:row"/>
         </xs:sequence>
         <xs:attribute name="tableName" type="xs:string" use="required"/>
+        <xs:attribute default="always" name="use" type="xs:string"/>
     </xs:complexType>
     <xs:complexType name="row">
         <xs:sequence>

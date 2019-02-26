@@ -98,9 +98,11 @@
         <xs:complexContent>
             <xs:extension base="e2:entityReference">
                 <xs:sequence>
+                    <xs:element minOccurs="0" name="postProcessor" type="xs:string"/>
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="element" type="e2:element"
                     />
                 </xs:sequence>
+                <xs:attribute name="dependsOn" type="xs:string"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
